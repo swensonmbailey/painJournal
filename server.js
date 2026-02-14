@@ -2,6 +2,7 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const clientRouter = require('./client');
+const dashboardRouter = require('./dashboard');
 const app = express();
 
 app.use(cors({
@@ -15,6 +16,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/client', clientRouter);
+
+app.use('/dashboard', dashboardRouter);
 
 app.listen(3000, () => {
     console.log('up and running')
