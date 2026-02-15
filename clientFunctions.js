@@ -1,6 +1,8 @@
 const pool = require('./db');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+
+
 async function getBearerToken() {
     const axios = require('axios');
     const qs = require('qs');
@@ -125,20 +127,25 @@ function validateClientWithProject(client, project){
     return [isValidated, clientContact];
 }
 
+function createJWT(projectNum, res){
+    const accessToken = jwt.sign(projectNum, process.env.ACCESS_TOKEN_SECRET);
+    return res.json({accessToken: accessToken});
+}
+
 function authenticateToken(req, res, next){
     const authHeader = req.headers['authorization'];
     const token = authHeader.split(' ')[1];
     if(token == null) return res.sendStatus(401);
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, phone) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, projectNum) => {
         if(err) return res.sendStatus(403);
-        console.log(phone);
-        req.phone = phone;
+        console.log(projectNum);
+        req.projectNum = projectNum;
         next();
     });
 }
 
-async function getDashboardInfo(phone, projectNum){
+async function getUserDatabaseInfo(phone, projectNum){
     const [rows] = await pool.query(
             `SELECT *
             FROM contacts
@@ -226,5 +233,5 @@ async function createDatabaseRecord(phone, projectNum, client, project, res){
 }   
 
 module.exports = { getBearerToken, getClientByPhone, getProjectByNumber, validateClientWithProject, 
-    authenticateToken, getDashboardInfo, createDatabaseRecord, getClientByEmail
+    authenticateToken, createDatabaseRecord, createJWT, getUserDatabaseInfo
  };
