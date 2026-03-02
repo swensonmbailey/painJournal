@@ -12,12 +12,14 @@
     <img id="logo" src="LEVAR logo hurt.png" alt="LeVar Law Logo">
     <div id="headingDiv">
         <h1>Pain Journal</h1>
-        <h2>Login</h2>
+        <h2 id="subtitle">Login</h2>
     </div>
     
  </div>
 
 <form id="login" name="login" method="post">
+
+<span id="alert" class="hidden"></span>
 
 <ul>
 <li class="userInput">Phone Number: <input id="phone" type="phone" name="phone" required>
@@ -27,8 +29,17 @@
 </li>
 </ul>
 
-<input type="submit" class="submit" value="Log In" name="submit">
+<input type="submit" class="submit" id="submit" value="Log In" name="submit">
+
 </form>
+
+
+
+<div id="switchBox">
+    Sign In
+</div>
+
+
 </div>
 <script src="login.js"></script>
 
