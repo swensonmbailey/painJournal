@@ -1,11 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="dashboard.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeVar Law Pain Journal | Dashboard</title>
 </head>
+
 <body>
+
+<div class="container">
+
+    <div class="header">
+        <img id="logo" src="LEVAR logo hurt.png" alt="LeVar Law Logo">
+        <div id="headingDiv">
+            <h1>Pain Journal</h1>
+            <h2 id="subtitle">Dashboard</h2>
+        </div>
+        <div id="signOutDiv">
+            <button id="signOut" type="button">Sign Out</button>
+        </div>
+    </div>
+
+    <!-- Client Info Section -->
+    <div id="clientInfo">
+        <!-- <h3>Case Overview</h3> -->
+
+        <ul id="clientData">
+            <li><strong>Client:</strong> <span id="clientName" class="clientSpan">John Doe</span></li>
+            <li><strong>Attorney:</strong> <span id="attorneyName" class="clientSpan">Jane Smith</span></li>
+            <li><strong>Case Status:</strong> <span id="caseStatus" class="clientSpan">Active</span></li>
+        </ul>
+
     
+        <div id="lastEntryBox">
+            <button id="lastEntryButton" type="button">Show Last Journal Entry</button>
+            <div id="lastEntry" class="hidden">
+                <p id="lastEntryScale"></p>
+                <p id="lastEntryText">No entries submitted yet.</p>
+                <p id="lastEntryDate"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Entry Form -->
+    <form id="entryForm" name="entryForm" method="post">
+
+        <h3 id="entryTitle">Submit New Entry</h3>
+
+        <textarea id="entryText" name="entryText" rows="6" placeholder="Describe your pain, symptoms, or updates..." required></textarea>
+
+        <label for="painScale"><strong>Pain Level (0–10):</strong></label>
+        <input id="painScale" type="number" name="painScale" min="0" max="10" required>
+
+        <input type="submit" class="submit" id="submitEntry" value="Submit Entry">
+    </form>
+
+</div>
+
+<script src="dash.js"></script>
+
 </body>
 </html>

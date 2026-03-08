@@ -1,6 +1,13 @@
+
 *{
 	text-align: center;
     padding: 5px;
+}
+
+
+body{
+    padding: 0px;
+    margin: 0px;
 }
 
 li {
@@ -21,12 +28,13 @@ input {
 .header{
     display: flex;
     flex-direction: row;
-    margin: auto;
+    
+
 }
 
 #logo{
     border-radius: 50%;
-    width: 200px;
+    width: 150px;
 
 }
 
@@ -43,12 +51,37 @@ h2{
     color: #cf2e2e;
 }
 
+#signOutDiv{
+    width: 150px;
+}
+
+#signOut{background-color: transparent;
+	color: black;
+	border: 1px solid black;
+	height: 25px;
+    width: 100px;
+	font-family: sans-serif;
+	font-size: 12px;
+	transition: 0.9s ease;
+	text-align: center;
+}
+
+#signOut:hover {
+	background-color: #8ed1fc;
+	color: black;
+	border: 1px solid black;
+    font-family: 'Times New Roman', Times, serif;
+	
+}
+
 .container {
     font-family: sans-serif;
     border: 2px solid #0693e3;
-    width: 45%;
+    width: 70%;
+    height: 90vh;
     text-align: center;
-    margin: auto;
+    margin: 0px auto;
+
     border-radius: 12px;
     background-color: #f2f2f2;
     padding-bottom: 10px;
@@ -67,12 +100,15 @@ h2{
     display: none;
 }
 
-.userInput{
+
+
+
+/* .userInput{
     margin: 0px auto;
     width: 60%;
     display: flex;
     justify-content: space-between;
-}
+} */
 
 .submit{
 	background-color: transparent;
@@ -107,25 +143,100 @@ body {
 
 /* --------------------------- */
 
-#switchBox{
-    width: 75px;
-    background-color: transparent;
-	color: black;
-	border: 1px solid black;
-    border-radius: 10px;
-	font-family: sans-serif;
-	font-size: 12px;
-	transition: 0.9s ease;
-	text-align: center;
-    
-}
-#switchBox:hover{
-    cursor: pointer;
-    background-color: #8ed1fc;
-	color: black;
-	border: 1px solid black;
+
+
+
+
+#clientData{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0px;
 }
 
+#clientData li{
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.clientSpan{
+    margin: 0px;
+    padding: 0px;
+}
+
+#clientInfo {
+    width: 80%;
+    margin:auto;
+    text-align: left;
+}
+
+#clientInfo h3 {
+    color: #0693e3;
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: 5px;
+}
+
+#clientInfo ul {
+    padding: 0;
+}
+
+#clientInfo li {
+    list-style-type: none;
+    font-size: 12px;
+}
+
+#lastEntryBox {
+    background-color: white;
+    padding: 0px;
+    border-radius: 8px;
+}
+
+.lastEntryBoxBorder{
+    border: 1px solid #0693e3;
+}
+
+#lastEntryButton{
+    margin: 5px auto;
+	font-family: sans-serif;
+	font-size: 12px;
+	text-align: center;
+    width: 50%;
+    border: 1px solid black;
+}
+
+#lastEntryButton:hover {
+    cursor: pointer;
+    transition: 0.9s ease;
+	background-color: #8ed1fc;
+	color: black;
+	border: 1px solid black;
+    font-family: 'Times New Roman', Times, serif;
+	
+}
+
+
+
+#entryForm {
+    width: 80%;
+    margin: 5px auto;
+    text-align: left;
+}
+
+#entryForm textarea {
+    width: 100%;
+    border: 1px solid #0693e3;
+    border-radius: 6px;
+    padding: 8px;
+    resize: vertical;
+}
+
+#entryForm input[type="number"] {
+    width: 60px;
+    margin-bottom: 10px;
+}
 
 
 /* _________________________ */

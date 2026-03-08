@@ -2,6 +2,8 @@
 // 1. Get a reference to the form element
 const form = document.getElementById('login');
 const alert = document.getElementById("alert");
+const loadingSpinner = document.getElementById('loading-spinner');
+const container = document.getElementById('container');
 
 let isSignUp = false;
 
@@ -50,6 +52,9 @@ async function checkJWT(){
         return
     }
 
+    loadingSpinner.style.display = 'block';
+    container.style.display = 'none';
+
     const jwt = localStorage.getItem('jwt');
 
     console.log(jwt);
@@ -73,6 +78,11 @@ async function checkJWT(){
         console.log("Body:", body);
 
         if (!ok) {
+
+
+            loadingSpinner.style.display = 'none';
+            container.style.display = 'block';
+
             // handle errors based on status
             if (status === 401) {
                 console.log("Already signed up");
@@ -93,6 +103,10 @@ async function checkJWT(){
 }
 
 async function logIn(){
+
+    loadingSpinner.style.display = 'block';
+    container.style.display = 'none';
+
     let phone = document.getElementById("phone").value;
     let code = document.getElementById("code").value;
 
@@ -125,6 +139,11 @@ async function logIn(){
         console.log("Body:", body);
 
         if (!ok) {
+
+
+            loadingSpinner.style.display = 'none';
+            container.style.display = 'block';
+
             // handle errors based on status
             if (status === 401) {
                 console.log("credentials not valid");
@@ -150,6 +169,10 @@ async function logIn(){
 }
 
 async function signup(){
+
+    loadingSpinner.style.display = 'block';
+    container.style.display = 'none';
+
     let phone = document.getElementById("phone").value;
     let code = document.getElementById("code").value;
 
@@ -182,6 +205,10 @@ async function signup(){
         console.log("Body:", body);
 
         if (!ok) {
+
+            loadingSpinner.style.display = 'none';
+            container.style.display = 'block';
+
             // handle errors based on status
             if (status === 401) {
                 console.log("Already signed up");
