@@ -28,13 +28,14 @@ input {
 .header{
     display: flex;
     flex-direction: row;
+    padding: 0px;
     
 
 }
 
 #logo{
     border-radius: 50%;
-    width: 150px;
+    width: 100px;
 
 }
 
@@ -49,6 +50,7 @@ h1, h2{
 }
 h2{
     color: #cf2e2e;
+    padding: 0px;
 }
 
 #signOutDiv{
@@ -192,6 +194,12 @@ body {
     background-color: white;
     padding: 0px;
     border-radius: 8px;
+    margin-top: 15px;
+}
+
+.lastEntryData{
+    margin: 0px;
+    padding: 2px;
 }
 
 .lastEntryBoxBorder{
@@ -217,12 +225,35 @@ body {
 	
 }
 
+#lastEntryEdit{
+    width: 100px;
+    font-family: sans-serif;
+	font-size: 12px;
+	text-align: center;
+    border: 1px solid black;
+}
+#lastEntryEdit:hover {
+    cursor: pointer;
+    transition: 0.9s ease;
+	background-color: #8ed1fc;
+	color: black;
+	border: 1px solid black;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#lastEntry *{
+    display: flex;
+}
 
 
 #entryForm {
     width: 80%;
     margin: 5px auto;
     text-align: left;
+}
+
+#entryTitle{
+    margin: 0px;
 }
 
 #entryForm textarea {

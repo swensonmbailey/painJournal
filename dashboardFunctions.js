@@ -3,21 +3,18 @@ require('dotenv').config();
 
 
 async function getDashboardInfo(projectNum){
+
+    console.log("in getDashBoardInfo");
     const [rows] = await pool.query(
-            `SELECT *
+            `SELECT contacts.firstName, contacts.lastName, contacts.phone, projects.phaseName, projects.attorneyName
             FROM contacts
             JOIN projects ON contacts.id = projects.contactId
             WHERE projects.id = ?`,
             [projectNum]
         );
 
-        // if (rows.length === 0) {
-        //     return res.status(404).json({ message: "No projects found for this contact" });
-        // }
-
         console.log(rows);
         return rows;
-
 
 }
 
@@ -46,7 +43,7 @@ async function getLastEntry(req, res) {
 
     try {
         const [rows] = await pool.query(
-            `SELECT *
+            `SELECT entries.id, entries.text, entries.dateTime, entries.painScale
              FROM entries
              WHERE projectId = ?
              ORDER BY dateTime DESC

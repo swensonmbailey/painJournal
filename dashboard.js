@@ -3,8 +3,8 @@ const functions = require('./dashboardFunctions');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', clientFunctions.authenticateToken, async (req, res) => {
-
+router.post('/', clientFunctions.authenticateToken, async (req, res) => {
+    console.log("in post /dashboard");
     let databaseInfo = await functions.getDashboardInfo(req.projectNum);
 
     //test to make sure project/client info received

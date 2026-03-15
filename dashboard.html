@@ -8,7 +8,11 @@
 
 <body>
 
-<div class="container">
+<div id="loading-spinner" class="hidden">
+    <!-- You can put a CSS spinner, a GIF, or text here -->
+</div>
+
+<div class="container" id="container">
 
     <div class="header">
         <img id="logo" src="LEVAR logo hurt.png" alt="LeVar Law Logo">
@@ -35,10 +39,12 @@
         <div id="lastEntryBox">
             <button id="lastEntryButton" type="button">Show Last Journal Entry</button>
             <div id="lastEntry" class="hidden">
-                <p id="lastEntryScale"></p>
-                <p id="lastEntryText">No entries submitted yet.</p>
-                <p id="lastEntryDate"></p>
+                <p class="lastEntryData" id="lastEntryScale">Pain Scale: </p>
+                <p class="lastEntryData" id="lastEntryText">Entry: </p>
+                <p class="lastEntryData" id="lastEntryDate">Date: </p>
             </div>
+            <p id="noLastEntry" class="hidden">No entries submitted yet.</p>
+            <button id="lastEntryEdit" type="button" class="hidden">Edit</button>
         </div>
     </div>
 
