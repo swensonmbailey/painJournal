@@ -17,10 +17,15 @@ const submitEntry = document.getElementById("submitEntry");
 const signOut = document.getElementById("signOut");
 const noLastEntry = document.getElementById("noLastEntry");
 const lastEntryEdit = document.getElementById("lastEntryEdit");
-const loadingSpinner = document.getElementById("loading-spinner");
+const loadingSpinner = document.getElementById("loadingSpinner");
+const lastEntrySpinner = document.getElementById("lastEntryLoadingSpinner");
+const entryFormSpinner = document.getElementById("entryFormLoadingSpinner");
 const container = document.getElementById("container");
+const cancelButton = document.getElementById("cancelButton");
 
-const lastEntryId = null;
+let lastEntryId = null;
+let lastEntryTextSaved = null;
+let lastEntryScaleSaved = null;
 
 let showLast = false;
 let editLast = false;
@@ -69,16 +74,15 @@ async function checkJWT() {
         container.classList.remove('hidden');
 
         if (!ok) {
-            if (status === 401) {
-                alert.innerText = "Session expired. Please log in again.";
-                alert.classList.remove("hidden");
-            } else if (status === 404) {
-                console.log("Dashboard data not found");
-            } else if (status === 403) {
-                console.log("Forbidden — token not allowed");
-            }
 
-            window.location.replace("http://127.0.0.1:5500/login.html");
+            console.log(status);
+            console.log(body);
+
+            if (status >= 500) {
+                alert.classList.remove("hidden");
+            } else{
+                window.location.replace("http://127.0.0.1:5500/login.html");
+            }
             return null;
         }
 
@@ -86,10 +90,10 @@ async function checkJWT() {
         const data = JSON.parse(body);
         console.log("Dashboard data:", data);
 
-        return data;   // <-- THIS FIXES YOUR ISSUE
+        return data;   
 
     } catch (err) {
-        console.error("Fetch error:", err);
+       console.log("Fetch error:", err);
         return null;
     }
 }
@@ -102,6 +106,97 @@ lastEntryButton.addEventListener('click',()=>{
 entryForm.addEventListener('submit', async (event)=>{
     event.preventDefault();
 
+   manageSubmit(event);
+
+});
+
+signOut.addEventListener("click", ()=>{
+
+});
+
+lastEntryEdit.addEventListener("click", ()=>{
+    showLast = !showLast;
+    manageLastEntry();
+    editLast = true;
+    manageEditEntry();
+})
+
+cancelButton.addEventListener("click", ()=>{
+    editLast = false;
+    manageEditEntry();
+})
+
+async function manageLastEntry(){
+    if(showLast){
+        lastEntryBox.classList.toggle("lastEntryBoxBorder");
+        lastEntryButton.classList.add("hidden");
+        entryForm.classList.add("hidden");
+        let data = await getLast();
+        lastEntryButton.classList.remove("hidden");
+        lastEntryButton.innerText = "Hide Last Journal Entry";
+        if(data){
+            lastEntry.classList.remove("hidden");
+            lastEntry.classList.add("lastEntry");
+            lastEntryScale.innerText = `Pain: ${data.painScale}`;
+
+            const date = new Date(data.dateTime);
+            const formatted = date.toLocaleDateString("en-US", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            });
+
+
+            lastEntryDate.innerText = `${formatted}`;
+            lastEntryText.innerHTML = `${data.text}`;
+            lastEntryId = data.id;
+            lastEntryTextSaved = data.text;
+            lastEntryScaleSaved = data.painScale;
+        }else{
+            noLastEntry.classList.remove('hidden');
+        }
+        
+    }else{
+        entryForm.classList.remove("hidden");
+        noLastEntry.classList.add('hidden');
+        lastEntry.classList.add("hidden");
+        lastEntry.classList.remove("lastEntry");
+        lastEntryBox.classList.toggle("lastEntryBoxBorder");
+        lastEntryButton.innerText = "Show Last Journal Entry";
+    }
+}
+
+function manageEditEntry(){
+    if(editLast){
+        entryTitle.innerText = "Edit Last Entry";
+        submitEntry.value = "Edit Entry"
+        cancelButton.classList.remove("hidden");
+        lastEntryButton.classList.add("hidden");
+
+        entryText.value = lastEntryTextSaved;
+        painScale.value = lastEntryScaleSaved;
+
+    }else{
+        entryTitle.innerText = "Submit New Entry";
+        submitEntry.value = "Submit Entry"
+        cancelButton.classList.add("hidden");
+        lastEntryButton.classList.remove("hidden");
+
+        entryForm.reset();
+
+    }
+}
+
+async function manageSubmit(event){
+
+    if(editLast){
+        await editLastEntry(event);
+    }else{
+        await makeNewEntry(event);
+    }
+}
+
+async function makeNewEntry(event) {
     const formData = new FormData(event.target);
 
     const text = formData.get('entryText');
@@ -112,6 +207,11 @@ entryForm.addEventListener('submit', async (event)=>{
     var raw = JSON.stringify({
     "text": text,
     "painScale": painScale
+    });
+
+    entryFormSpinner.classList.remove('hidden');
+    document.querySelectorAll('.entryFormInput').forEach(el => {
+        el.classList.add('hidden');
     });
 
 
@@ -133,18 +233,14 @@ entryForm.addEventListener('submit', async (event)=>{
         console.log("OK?:", ok);
         console.log("Body:", body);
 
-        loadingSpinner.classList.add('hidden');
-        container.classList.remove('hidden');
+        entryFormSpinner.classList.add('hidden');
+        document.querySelectorAll('.entryFormInput').forEach(el => {
+            el.classList.remove('hidden');
+        });
 
         if (!ok) {
-            if (status === 401) {
-                alert.innerText = "Session expired. Please log in again.";
-                alert.classList.remove("hidden");
-            } else if (status === 404) {
-                console.log("error");
-            } else if (status === 403) {
-                console.log("Forbidden — token not allowed");
-            }
+
+            alert.classList.remove("hidden");
 
         }
 
@@ -152,41 +248,78 @@ entryForm.addEventListener('submit', async (event)=>{
         console.log("New Entry response:", JSON.parse(body));
 
     } catch (err) {
-        console.error("Fetch error:", err);
+       console.log("Fetch error:", err);
     }
 
     entryForm.reset();
+}
 
-});
+async function editLastEntry(event){
+    const formData = new FormData(event.target);
 
-signOut.addEventListener("click", ()=>{
+    const text = formData.get('entryText');
+    const painScale = Number(formData.get('painScale'));
 
-});
+    const jwt = localStorage.getItem('jwt');
 
-async function manageLastEntry(){
-    if(showLast){
-        entryForm.classList.toggle("hidden");
-        let data = await getLast();
-        if(data){
-            lastEntry.classList.remove("hidden");
-            lastEntryScale.innerText = `Pain scale: ${data.painScale}`;
-            lastEntryDate.innerText = `Date: ${data.dateTime}`;
-            lastEntryText.innerHTML = `Entry: <br> ${data.text}`;
-        }else{
-            noLastEntry.classList.remove('hidden');
+    var raw = JSON.stringify({
+    "text": text,
+    "painScale": painScale,
+    "entryId": lastEntryId
+    });
+
+    entryFormSpinner.classList.remove('hidden');
+    document.querySelectorAll('.entryFormInput').forEach(el => {
+        el.classList.add('hidden');
+    });
+
+
+    try {
+        const response = await fetch("http://127.0.0.1:3000/dashboard/entry", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${jwt}`
+                },
+                body: raw
+        });
+
+        const status = response.status;
+        const ok = response.ok;
+        const body = await response.text();
+
+        console.log("Status:", status);
+        console.log("OK?:", ok);
+        console.log("Body:", body);
+
+        entryFormSpinner.classList.add('hidden');
+        document.querySelectorAll('.entryFormInput').forEach(el => {
+            el.classList.remove('hidden');
+        });
+
+        if (!ok) {
+
+            alert.classList.remove("hidden");
+
         }
-        lastEntryBox.classList.toggle("lastEntryBoxBorder");
-        lastEntryButton.innerText = "Hide Last Journal Entry";
-    }else{
-        entryForm.classList.remove("hidden");
-        lastEntry.classList.add("hidden");
-        lastEntryBox.classList.toggle("lastEntryBoxBorder");
-        lastEntryButton.innerText = "Show Last Journal Entry";
+
+        // Parse JSON
+        console.log("New Entry response:", JSON.parse(body));
+        editLast = !editLast;
+        manageEditEntry();
+
+    } catch (err) {
+       console.log("Fetch error:", err);
     }
+
+    entryForm.reset();
 }
 
 async function getLast(){
     try {
+
+        lastEntrySpinner.classList.remove('hidden');
+
         const jwt = localStorage.getItem('jwt');
         const response = await fetch("http://127.0.0.1:3000/dashboard/entry", {
                 method: "GET",
@@ -204,18 +337,11 @@ async function getLast(){
         console.log("OK?:", ok);
         console.log("Body:", body);
 
-        loadingSpinner.classList.add('hidden');
-        container.classList.remove('hidden');
+        lastEntrySpinner.classList.add('hidden');
+        
 
         if (!ok) {
-            if (status === 401) {
-                alert.innerText = "Session expired. Please log in again.";
-                alert.classList.remove("hidden");
-            } else if (status === 404) {
-                console.log("error");
-            } else if (status === 403) {
-                console.log("Forbidden — token not allowed");
-            }
+            alert.classList.remove("hidden");
             return null
         }
 
@@ -225,7 +351,7 @@ async function getLast(){
 
 
     } catch (err) {
-        console.error("Fetch error:", err);
+       console.log("Fetch error:", err);
         return null;
     }
 

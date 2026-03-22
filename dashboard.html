@@ -8,7 +8,7 @@
 
 <body>
 
-<div id="loading-spinner" class="hidden">
+<div id="loadingSpinner" class="hidden loadingSpinner">
     <!-- You can put a CSS spinner, a GIF, or text here -->
 </div>
 
@@ -27,7 +27,6 @@
 
     <!-- Client Info Section -->
     <div id="clientInfo">
-        <!-- <h3>Case Overview</h3> -->
 
         <ul id="clientData">
             <li><strong>Client:</strong> <span id="clientName" class="clientSpan">John Doe</span></li>
@@ -35,16 +34,23 @@
             <li><strong>Case Status:</strong> <span id="caseStatus" class="clientSpan">Active</span></li>
         </ul>
 
+        <div id="alert" class="hidden">Error connecting to database. Sorry! Refresh and try again later.</div>
     
         <div id="lastEntryBox">
             <button id="lastEntryButton" type="button">Show Last Journal Entry</button>
+            
+            <div id="lastEntryLoadingSpinner" class="hidden loadingSpinner">
+                <!-- You can put a CSS spinner, a GIF, or text here -->
+            </div>
+            
             <div id="lastEntry" class="hidden">
-                <p class="lastEntryData" id="lastEntryScale">Pain Scale: </p>
-                <p class="lastEntryData" id="lastEntryText">Entry: </p>
-                <p class="lastEntryData" id="lastEntryDate">Date: </p>
+                <p class="lastEntryData" id="lastEntryDate"></p>
+                <p class="lastEntryData" id="lastEntryScale"></p>
+                <p class="lastEntryData" id="lastEntryText"></p>
+                <button id="lastEntryEdit" type="button" >Edit</button>
+                
             </div>
             <p id="noLastEntry" class="hidden">No entries submitted yet.</p>
-            <button id="lastEntryEdit" type="button" class="hidden">Edit</button>
         </div>
     </div>
 
@@ -53,12 +59,17 @@
 
         <h3 id="entryTitle">Submit New Entry</h3>
 
-        <textarea id="entryText" name="entryText" rows="6" placeholder="Describe your pain, symptoms, or updates..." required></textarea>
+        <div id="entryFormLoadingSpinner" class="hidden loadingSpinner">
+            <!-- You can put a CSS spinner, a GIF, or text here -->
+        </div>
 
-        <label for="painScale"><strong>Pain Level (0–10):</strong></label>
-        <input id="painScale" type="number" name="painScale" min="0" max="10" required>
+        <textarea id="entryText" class="entryFormInput" name="entryText" rows="6" placeholder="Describe your pain, symptoms, or updates..." required></textarea>
 
-        <input type="submit" class="submit" id="submitEntry" value="Submit Entry">
+        <label for="painScale" class="entryFormInput"><strong>Pain Level (0–10):</strong></label>
+        <input id="painScale" class="entryFormInput" type="number" name="painScale" min="0" max="10" required>
+
+        <input type="submit" class="submit entryFormInput" id="submitEntry" value="Submit Entry">
+        <button id="cancelButton" type="button" class="hidden" >Cancel Edit</button>
     </form>
 
 </div>

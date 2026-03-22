@@ -1,8 +1,14 @@
 const pool = require('./db');
 require('dotenv').config();
 
+function sleep(seconds) {
+  return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+}
+
 
 async function getDashboardInfo(projectNum){
+
+    // await sleep(5);
 
     console.log("in getDashBoardInfo");
     const [rows] = await pool.query(
@@ -20,6 +26,9 @@ async function getDashboardInfo(projectNum){
 
 
 async function makeJournalEntry(req, res){
+
+    // await sleep(5);
+
     const { text, painScale } = req.body;
 
     const dateTime = getDate();
@@ -39,6 +48,9 @@ async function makeJournalEntry(req, res){
 }
 
 async function getLastEntry(req, res) {
+    
+    // await sleep(5);
+
     const projectId  = req.projectNum;
 
     try {
@@ -52,7 +64,7 @@ async function getLastEntry(req, res) {
         );
 
         if (rows.length === 0) {
-            return res.status(404).json({ message: "No entries found for this project" });
+            return res.status(204).json({ message: "No entries found for this project" });
         }
 
         res.json(rows[0]);
@@ -64,6 +76,9 @@ async function getLastEntry(req, res) {
 }
 
 async function updateLastEntry(req, res) {
+
+    // await sleep(5);
+
     const { text, painScale, entryId } = req.body;
     const projectNum = req.projectNum;
 

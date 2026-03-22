@@ -96,12 +96,8 @@ h2{
 #alert{
     color: #cf2e2e;
     text-align: left;
+    font-size: 12px;
 }
-
-.hidden{
-    display: none;
-}
-
 
 
 
@@ -144,9 +140,6 @@ body {
 
 
 /* --------------------------- */
-
-
-
 
 
 #clientData{
@@ -241,10 +234,30 @@ body {
     font-family: 'Times New Roman', Times, serif;
 }
 
-#lastEntry *{
-    display: flex;
+.lastEntry{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
 }
 
+#lastEntryDate{
+    grid-column: 1 / span 1;
+}
+
+#lastEntryScale{
+    grid-column: 2 / span 1;
+}
+#lastEntryText{
+    font-family: 'Times New Roman', Times, serif;
+    grid-column: 1 / span 2;
+    border-top: black 1px solid;
+}
+
+#lastEntryEdit{
+    grid-column: 2 / span 1;
+    justify-self: end;
+    width: 75px;
+}
 
 #entryForm {
     width: 80%;
@@ -270,15 +283,32 @@ body {
 }
 
 
+#cancelButton{
+    width: 100px;
+    font-family: sans-serif;
+	font-size: 12px;
+	text-align: center;
+    border: 1px solid black;
+}
+#cancelButton:hover {
+    cursor: pointer;
+    transition: 0.9s ease;
+	background-color: #8ed1fc;
+	color: black;
+	border: 1px solid black;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
 /* _________________________ */
 
 
 /* Style the spinner container */
-#loading-spinner {
+.loadingSpinner {
     /* Center the spinner on the page or within its container */
-    position: fixed; /* Or 'absolute' depending on your layout */
-    top: 50%;
-    left: 50%;
+    /* position: absolute; */
+    /* top: 50%;
+    left: 50%; */
     transform: translate(-50%, -50%);
     z-index: 10;
     /* Basic styling for the spinner itself */
@@ -290,6 +320,10 @@ body {
     animation: spin 1s linear infinite;
 }
 
+#lastEntryLoadingSpinner, #entryFormLoadingSpinner{
+    margin: auto;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -297,6 +331,9 @@ body {
 
 /* _________________________ */
 
+.hidden{
+    display: none;
+}
 
 
 
