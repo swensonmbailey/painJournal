@@ -158,7 +158,7 @@ async function getUserDatabaseInfo(phone, projectNum){
         //     return res.status(404).json({ message: "No projects found for this contact" });
         // }
 
-        console.log(rows);
+        // console.log(rows);
         return rows;
 
 

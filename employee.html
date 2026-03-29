@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login</title>
+	<title>Employee Login</title>
 	<link rel="stylesheet" type="text/css" href="login.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -16,7 +16,7 @@
     <img id="logo" src="LEVAR logo hurt.png" alt="LeVar Law Logo">
     <div id="headingDiv">
         <h1>Pain Journal</h1>
-        <h2 id="subtitle">Login</h2>
+        <h2 id="subtitle">Employee Login</h2>
     </div>
     
  </div>
@@ -24,6 +24,10 @@
 <form id="login" name="login" method="post">
 
 <span id="alert" class="hidden"></span>
+
+<ul>
+<li class="userInput">Employee Username: <input id="username" type="text" name="username" required>
+</li>
 
 <ul>
 <li class="userInput">Phone Number: <input id="phone" type="phone" name="phone" required>
@@ -38,14 +42,8 @@
 </form>
 
 
-
-<div id="switchBox">
-    Sign Up
 </div>
-
-
-</div>
-<script src="login.js"></script>
+<script src="employeeLogin.js"></script>
 
 </body>
 </html>

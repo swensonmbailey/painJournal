@@ -79,7 +79,7 @@ h2{
 .container {
     font-family: sans-serif;
     border: 2px solid #0693e3;
-    width: 70%;
+    width: 75%;
     height: 90vh;
     text-align: center;
     margin: 0px auto;
@@ -184,7 +184,7 @@ body {
 }
 
 #lastEntryBox {
-    background-color: white;
+    background-color: #f2f2f2;
     padding: 0px;
     border-radius: 8px;
     margin-top: 15px;
@@ -339,9 +339,6 @@ body {
 
 @media screen and (max-width: 1150px) {
   /* CSS rules to apply when the screen width is 900px or less */
-  .container{
-    width: 50%; 
-  }
 
   .userInput{
     flex-direction: column;
@@ -351,12 +348,9 @@ body {
 @media screen and (max-width: 850px) {
     #logo{
         width: 130px;
-        margin: auto;
     }
 
-    .container{
-        width: 60%; 
-    }
+   
 }
 
 @media screen and (max-width: 590px){
@@ -365,11 +359,11 @@ body {
     }
 
     #logo{
-        width: 175px;
-        margin: auto;
+        width: 125px;
     }
 
-    .container{
-        width: 70%; 
+    #container{
+        width: 95%;
     }
+
 }

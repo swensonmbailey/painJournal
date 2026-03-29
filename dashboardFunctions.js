@@ -8,7 +8,7 @@ function sleep(seconds) {
 
 async function getDashboardInfo(projectNum){
 
-    // await sleep(5);
+    await sleep(5);
 
     console.log("in getDashBoardInfo");
     const [rows] = await pool.query(
@@ -27,7 +27,7 @@ async function getDashboardInfo(projectNum){
 
 async function makeJournalEntry(req, res){
 
-    // await sleep(5);
+    await sleep(5);
 
     const { text, painScale } = req.body;
 
@@ -49,7 +49,7 @@ async function makeJournalEntry(req, res){
 
 async function getLastEntry(req, res) {
     
-    // await sleep(5);
+    await sleep(5);
 
     const projectId  = req.projectNum;
 
@@ -77,7 +77,7 @@ async function getLastEntry(req, res) {
 
 async function updateLastEntry(req, res) {
 
-    // await sleep(5);
+    await sleep(5);
 
     const { text, painScale, entryId } = req.body;
     const projectNum = req.projectNum;
